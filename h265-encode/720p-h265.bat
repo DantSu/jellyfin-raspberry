@@ -12,7 +12,7 @@ IF DEFINED paths[%pathPos%] (
     SET pathRelative=!paths[%pathPos%]:"=!
     REM "
     ECHO "Paths n. %pathPos% : !pathRelative!"
-    SET pathWilcard="Z:\Jeunesse\!pathRelative!\*.*"
+    SET pathWilcard="D:\PATH_COMMUN_VERS_LES_VIDEOS\!pathRelative!\*.*"
     FOR %%i IN (!pathWilcard!) DO (
       SET filePath=%%i
       SET name=%%~ni
