@@ -1,0 +1,133 @@
+services:
+  # Alldebrid downloader
+  rdtclient:
+    image: rogerfar/rdtclient
+    container_name: rdtclient
+    environment:
+      - TZ=Europe/Paris
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /home/patmat/Jellyfin/Config/rdtclient:/data/db
+      - /home/patmat/Jellyfin/Downloads:/data/downloads
+    ports:
+      - 6500:6500
+    restart: unless-stopped
+    networks:
+      - default
+      - shared_network
+
+  # Jellyseerr
+  jellyseerr:
+    image: hotio/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+      - TZ=Europe/Paris
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - 5055:5055
+    volumes:
+      - /home/patmat/Jellyfin/Config/jellyseerr:/app/config
+    restart: unless-stopped
+    networks:
+      - default
+      - shared_network
+
+  # Sonarr
+  sonarr:
+    image: hotio/sonarr:latest
+    container_name: sonarr
+    environment:
+      - TZ=Europe/Paris
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /home/patmat/Jellyfin/Config/sonarr:/config
+      - /home/patmat/Jellyfin/Series:/tv
+      - /home/patmat/Jellyfin/Downloads:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    networks:
+      - default
+      - shared_network
+
+  # Radarr
+  radarr:
+    image: hotio/radarr:latest
+    container_name: radarr
+    environment:
+      - TZ=Europe/Paris
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /home/patmat/Jellyfin/Config/radarr:/config
+      - /home/patmat/Jellyfin/Films:/movies
+      - /home/patmat/Jellyfin/Downloads:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+    networks:
+      - default
+      - shared_network
+
+  # Prowlarr
+  prowlarr:
+    image: hotio/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - TZ=Europe/Paris
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /home/patmat/Jellyfin/Config/prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+    networks:
+      - default
+      - shared_network
+
+  #FlareResolver
+  flaresolverr:
+    image: 21hsmw/flaresolverr:nodriver
+    container_name: flaresolverr
+    environment:
+      - TZ=Europe/Paris
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+    ports:
+      - 8191:8191
+    restart: unless-stopped
+
+  # Jellyfin server
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Paris
+      - PUID=1000
+      - PGID=1000
+      - JELLYFIN_DATA_DIR=/config
+      - JELLYFIN_CACHE_DIR=/cache
+      - JELLYFIN_CONFIG_DIR=/config/config
+      - JELLYFIN_LOG_DIR=/config/log
+      - JELLYFIN_WEB_DIR=/jellyfin/jellyfin-web
+      - JELLYFIN_FFMPEG=/usr/lib/jellyfin-ffmpeg/ffmpeg
+    ports:
+      - 8096:8096
+    volumes:
+      - /home/patmat/Jellyfin/Config/jellyfin:/config
+      - /home/patmat/Jellyfin/Films:/Films
+      - /home/patmat/Jellyfin/Series:/Series
+    networks:
+      - default
+      - shared_network
+
+networks:
+  default:
+  shared_network:
+    external: true
