@@ -30,7 +30,7 @@ rm get-docker.sh
 ## Connaitre ID d'un utilisateur
 
 ```sh
-- id [user_name]
+id [user_name]
 ```
 
 ## Créer les dossiers
