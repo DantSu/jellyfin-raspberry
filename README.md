@@ -56,7 +56,7 @@ mkdir Jellyfin/Config/jellyfin
 ```sh
 nano docker-compose.yml
 docker network create "shared_network"
-sudo docker compose up
+sudo docker compose up -d
 ```
 
 # Eteindre
