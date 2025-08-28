@@ -49,6 +49,7 @@ mkdir Jellyfin/Config/sonarr
 mkdir Jellyfin/Config/radarr
 mkdir Jellyfin/Config/prowlarr
 mkdir Jellyfin/Config/jellyfin
+mkdir Jellyfin/Share
 ```
 
 # Run docker-compose.yml
@@ -63,4 +64,39 @@ sudo docker compose up -d
 
 ```sh
 sudo shutdown -h now
+```
+
+# partage de fichiers SMB
+
+```sh
+sudo apt-get install cifs-utils
+nano ~/.smbcredentials
+```
+
+Contenu de `.smbcredentials` :
+
+```apacheconf
+username=smb_user_name
+password=smb_password
+domain=WORKGROUP
+```
+
+Ensuite lancer :
+
+```sh
+chmod 0600 ~/.smbcredentials
+sudo nano /etc/fstab
+```
+
+Ajouter à la fin de fstab :
+
+```
+//192.168.1.100/files /home/[USER_NAME]/Jellyfin/Share cifs credentials=/home/[USER_NAME]/.smbcredentials,x-systemd.automount,iocharset=utf8,rw,uid=1000,gid=1000,vers=2.1 0 0
+```
+
+Finir avec :
+
+```sh
+systemctl daemon-reload
+sudo mount -a
 ```

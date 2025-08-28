@@ -8,8 +8,8 @@ services:
       - PUID=1000
       - PGID=1000
     volumes:
-      - /home/patmat/Jellyfin/Config/rdtclient:/data/db
-      - /home/patmat/Jellyfin/Downloads:/data/downloads
+      - /home/[USER_NAME]/Jellyfin/Config/rdtclient:/data/db
+      - /home/[USER_NAME]/Jellyfin/Downloads:/data/downloads
     ports:
       - 6500:6500
     restart: unless-stopped
@@ -28,7 +28,7 @@ services:
     ports:
       - 5055:5055
     volumes:
-      - /home/patmat/Jellyfin/Config/jellyseerr:/app/config
+      - /home/[USER_NAME]/Jellyfin/Config/jellyseerr:/app/config
     restart: unless-stopped
     networks:
       - default
@@ -43,9 +43,9 @@ services:
       - PUID=1000
       - PGID=1000
     volumes:
-      - /home/patmat/Jellyfin/Config/sonarr:/config
-      - /home/patmat/Jellyfin/Series:/tv
-      - /home/patmat/Jellyfin/Downloads:/downloads
+      - /home/[USER_NAME]/Jellyfin/Config/sonarr:/config
+      - /home/[USER_NAME]/Jellyfin/Series:/tv
+      - /home/[USER_NAME]/Jellyfin/Downloads:/downloads
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -62,9 +62,9 @@ services:
       - PUID=1000
       - PGID=1000
     volumes:
-      - /home/patmat/Jellyfin/Config/radarr:/config
-      - /home/patmat/Jellyfin/Films:/movies
-      - /home/patmat/Jellyfin/Downloads:/downloads
+      - /home/[USER_NAME]/Jellyfin/Config/radarr:/config
+      - /home/[USER_NAME]/Jellyfin/Films:/movies
+      - /home/[USER_NAME]/Jellyfin/Downloads:/downloads
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -81,7 +81,7 @@ services:
       - PUID=1000
       - PGID=1000
     volumes:
-      - /home/patmat/Jellyfin/Config/prowlarr:/config
+      - /home/[USER_NAME]/Jellyfin/Config/prowlarr:/config
     ports:
       - 9696:9696
     restart: unless-stopped
@@ -120,9 +120,9 @@ services:
     ports:
       - 8096:8096
     volumes:
-      - /home/patmat/Jellyfin/Config/jellyfin:/config
-      - /home/patmat/Jellyfin/Films:/Films
-      - /home/patmat/Jellyfin/Series:/Series
+      - /home/[USER_NAME]/Jellyfin/Config/jellyfin:/config
+      - /home/[USER_NAME]/Jellyfin/Films:/Films
+      - /home/[USER_NAME]/Jellyfin/Series:/Series
     networks:
       - default
       - shared_network
